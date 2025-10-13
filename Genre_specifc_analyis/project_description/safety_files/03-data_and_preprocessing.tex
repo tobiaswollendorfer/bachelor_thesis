@@ -1,0 +1,55 @@
+\chapter{Dataset}
+
+\section{Data Sources}
+
+This study combines three primary data sources to create a comprehensive dataset for analyzing sentiment patterns across music genres. The \textbf{JKU Dataset} (\textit{id\_youtube\_url.csv}) provides unique identifiers paired with YouTube URLs linking to music videos. The Music4All-Onion dataset~\cite{music4all_onion_zenodo_2022} connects these songs to genres based on audio features, enabling systematic genre classification.
+Finally, the \textbf{YouTube Data API v3} serves as the primary collection mechanism for user-generated comments and engagement metadata.
+
+These sources were selected for their complementary strengths: the JKU Dataset ensures broad musical coverage, the Music4All-Onion Dataset provides objective, audio-feature-based genre classifications avoiding subjective labeling bias, and YouTube represents the world's largest music streaming platform with authentic user interactions.
+
+
+\section{Representative Song Selection}
+
+The primary objective was to achieve fair representation across all music genres while avoiding bias toward larger, more popular genres that typically dominate music datasets. Larger genres often exhibit more cross-genre overlap and achieve higher relevance scores, which can marginalize underrepresented musical genres.  
+
+The selection algorithm was therefore designed around three key principles: (i) ensuring exactly $k$ unique videos per genre (preventing assignment of the same video to multiple genres), (ii) implementing fair conflict resolution when videos were contested by multiple genres, and (iii) maximizing representation of smaller genres through a fallback scoring mechanism that considers alternative options when conflicts arise.  
+
+In practice, the algorithm processed 260 initial genres, assigned the top-scoring videos to each genre, detected and resolved conflicts using fallback scores (where genres with weaker alternatives retained contested videos), and refilled losing genres with their next-best unassigned candidates. This iterative process continued until convergence was reached.  
+
+The outcome yielded 50 representative videos per genre across all qualifying genres, ensuring balanced representation while preserving video uniqueness in the final dataset. A detailed step-by-step description of the algorithm is provided in Appendix~\ref{appendix:selection_algorithm}.
+
+
+\section{Comment Collection \& Metadata}
+
+Using the YouTube Data API v3, up to 100 comments were collected per representative video, targeting the most recent user interactions. This systematic approach ensured uniform sampling across all genres regardless of their individual popularity or engagement levels.
+
+The collection process captured metadata at both the comment and video levels. Comment-level information included unique identifiers, authorship details, timestamps, engagement indicators such as likes, and reply structures. Video-level metadata comprised descriptive attributes (title, description, publication date), content characteristics (duration, definition, captions), engagement statistics (views, likes, comments, favorites), and technical properties (licensing status, privacy settings, and platform-specific flags).
+
+This two-level metadata structure allows for the joint analysis of individual comment characteristics and the broader video context, providing a comprehensive basis for examining how genre-specific factors influence audience engagement. In total, the dataset contains 34 distinct features for each comment.
+
+\section{Preprocessing Pipeline}
+
+\subsection{Language Filtering}
+Given that both VADER sentiment analysis and LIWC require English text for accurate processing, only english comments were retained for analysis. This decision, while necessary, introduces a cultural bias by excluding non-English speaking music communities and potentially underrepresenting genres popular in non-English speaking regions. The language filtering reduced the dataset from 620,736 initial comments to 356,973 english comments.
+
+\subsection{Text Standardization}
+A systematic text preprocessing pipeline standardized comment text through three stages: whitespace normalization (removing excess spaces, tabs, and line breaks) and case normalization (converting to lowercase for consistent analysis), and. This standardization ensures consistent input for the sentiment and linguistic analysis tools.
+
+\subsection{Genre Filtering}
+To ensure statistical reliability, genres with fewer than 500 English comments were excluded from analysis. This threshold balances the need for meaningful sample sizes with overall dataset coverage, reducing the genre count from 260 to 233 while keeping the analysis meaningful. The 27 excluded genres represent primarily niche or non-English-dominant musical styles.
+
+\section{Feature Extraction}
+
+\subsection{Sentiment Analysis}
+VADER (Valence Aware Dictionary for sentiment Reasoning) was selected for sentiment analysis due to its specific optimization for social media text and its ability to handle informal language elements such as slang and emojis commonly found in online communication \cite{hutto2014vader}. VADER generates four sentiment scores per comment: positive, negative, and neutral proportions, plus a compound score normalized between -1 (most negative) and +1 (most positive) that serves as the primary sentiment indicator \cite{Kapoor2024VaderCompound}.
+
+\subsection{Linguistic Features}
+LIWC (Linguistic Inquiry and Word Count) was employed to extract psycholinguistic features across multiple dimensions: psychological processes (cognitive, emotional, social), personal concerns (work, money, religion), linguistic dimensions (word count, pronouns, articles), and grammatical categories (verbs, adjectives, prepositions). These features enable analysis of communication styles and psychological patterns beyond basic sentiment.
+
+\section{Final Dataset Characteristics}
+
+The final dataset comprises 356,973 english comments distributed across 233 music genres, with each genre containing a minimum of 500 comments to ensure statistical validity. Despite efforts to minimize temporal dispersion by scraping only the most recent comments, the dataset still covers multiple years of YouTube activity, providing valuable insight into temporal dynamics in music communication.
+
+Genre representation varies significantly, with popular genres like pop and rock contributing thousands of comments while niche genres approach the 500-comment minimum threshold. 
+
+The preprocessing pipeline successfully standardized textual content while preserving essential metadata, creating a robust foundation for comparative sentiment and linguistic analysis across diverse musical communities.

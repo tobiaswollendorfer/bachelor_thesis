@@ -1,0 +1,37 @@
+\cleardoubleoddpage
+
+\chapter{Representative Song Selection Algorithm}
+\label{appendix:selection_algorithm}
+
+The algorithm operates in an iterative fashion to ensure fair distribution of representative videos across genres.
+
+\textbf{Input:}  
+\begin{itemize}
+    \item For each genre: ranked list of candidate videos with relevance scores.
+    \item Parameter $k$: number of representative videos per genre.
+\end{itemize}
+
+\textbf{Output:}  
+\begin{itemize}
+    \item For each genre: exactly $k$ unique videos.
+\end{itemize}
+
+\textbf{Procedure:}  
+\begin{enumerate}
+    \item \textbf{Initial Assignment:}  
+    Assign the top $k$ videos to each genre with at least $k$ candidates.
+    \item \textbf{Conflict Detection:}  
+    Identify videos assigned to multiple genres.
+    \item \textbf{Conflict Resolution:}  
+    \begin{itemize}
+        \item Compute fallback scores for each genre (the score of the next unused candidate).
+        \item Retain the video for the genre with the lowest fallback score (i.e., the worst alternative).
+        \item Break ties using: (i) higher score on contested video, (ii) alphabetical order of genre name.
+    \end{itemize}
+    \item \textbf{Loser Refill:}  
+    Genres losing a conflict replace the video with their next best unused candidate.
+    \item \textbf{Iteration:}  
+    Repeat conflict detection and resolution until no conflicts remain or candidates are exhausted.
+    \item \textbf{Finalization:}  
+    Remove genres with fewer than $k$ assigned videos and output the final assignment.
+\end{enumerate}

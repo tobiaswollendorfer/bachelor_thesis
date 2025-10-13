@@ -1,0 +1,13 @@
+# Ignore Jupyter checkpoint and virtual document folders
+Genre_specifc_analyis/.ipynb_checkpoints/
+Genre_specifc_analyis/.virtual_documents/
+
+# Ignore playground experiments
+Genre_specifc_analyis/playground/
+
+# Ignore intermediate scraped comment folders
+Genre_specifc_analyis/scrape_comments/comments/
+
+# Ignore raw data folder
+Genre_specifc_analyis/scrape_comments/data/
+Genre_specifc_analyis/data/
