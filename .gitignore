@@ -19,3 +19,4 @@ Genre_specifc_analyis/data/final_dataset_with_clusters.csv
 Genre_specifc_analyis/data/id_genres_tf-idf.tsv
 Genre_specifc_analyis/data/music4all_to_youtube.json
 Genre_specifc_analyis/project_description/
+Genre_specifc_analyis/data/.ipynb_checkpoints/
