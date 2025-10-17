@@ -10,4 +10,12 @@ Genre_specifc_analyis/scrape_comments/comments/
 
 # Ignore raw data folder
 Genre_specifc_analyis/scrape_comments/data/
-Genre_specifc_analyis/data/
+Genre_specifc_analyis/data/.ipynb_checkpoints/
+Genre_specifc_analyis/data/assignments_top50_youtube.pkl
+Genre_specifc_analyis/data/correlation_pairs
+Genre_specifc_analyis/data/correlation_pairs.csv
+#Genre_specifc_analyis/data/final_dataset_english_only.csv
+Genre_specifc_analyis/data/final_dataset_with_clusters.csv
+Genre_specifc_analyis/data/id_genres_tf-idf.tsv
+Genre_specifc_analyis/data/music4all_to_youtube.json
+Genre_specifc_analyis/project_description/
